@@ -294,6 +294,30 @@ As of Kubernetes {{< skew latestVersion >}}, the following functionality does no
 ## {{% heading "whatsnext" %}}
 
 
+Ans:-
+apiVersion: v1
+kind: Pod
+metadata:
+ name: 11-factor-app
+spec:
+ containers:
+ - name: 11-factor-app
+ image: busybox
+ volumeMounts:
+ - name: logs
+ mountPath: /var/log/11-factor-app.log
+ - name: busybox-sidecar
+ image: busybox
+ args: [/bin/sh, -c, 'tail -n+1 /var/log/11-factor-app.log']
+ volumeMounts:
+ - name: logs
+ mountPath: /var/log/11-factor-app.log
+ volumes:
+ - name: logs
+ emptyDir: {}
+
+
+
 - See the [Declare Network Policy](/docs/tasks/administer-cluster/declare-network-policy/)
   walkthrough for further examples.
 - See more [recipes](https://github.com/ahmetb/kubernetes-network-policy-recipes) for common scenarios enabled by the NetworkPolicy resource.
